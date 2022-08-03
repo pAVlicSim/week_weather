@@ -3,7 +3,7 @@ from pprint import pprint
 import requests
 
 
-def get_weather_dict(lon: float, lat: float) -> dict:
+def get_weather_dict(lat: float, lon: float) -> dict:
     try:
         weather_url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&hourly=temperature_2m," \
                       f"relativehumidity_2m,dewpoint_2m,apparent_temperature,surface_pressure,precipitation," \
@@ -13,7 +13,7 @@ def get_weather_dict(lon: float, lat: float) -> dict:
                       f"apparent_temperature_max,apparent_temperature_min,sunrise,sunset,precipitation_sum," \
                       f"precipitation_hours,windspeed_10m_max,windgusts_10m_max,winddirection_10m_dominant," \
                       f"shortwave_radiation_sum&timeformat=unixtime&timezone=Europe%2FMoscow&windspeed_unit=ms" \
-                      f"&past_days=1"
+                      f"&past_days=0"
         resp = requests.get(weather_url)
         # pprint(resp.json())
         return resp.json()
@@ -25,8 +25,4 @@ def loc_to_coord(city_name: str):
     location_url = f"https://geocoding-api.open-meteo.com/v1/search?name={city_name}&language=ru"
     resp = requests.get(location_url)
     print(resp.json())
-    results = []
-    for i in resp.json()['results']:
-        results.append([i['name'], i['country'], i['admin1'], i['latitude'], i['longitude']])
-        # print(results)
-    return results
+    return resp.json()

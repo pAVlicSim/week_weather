@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QDialog
 
-from choose_city.choose_sity_form import Ui_Dialog
+from choose_sity_form import Ui_Dialog
 
 
 class ChooseCity(QDialog):
@@ -8,6 +8,10 @@ class ChooseCity(QDialog):
         super().__init__()
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
+        f = open('my_qssStyle.qss', 'r')
+        with f:
+            qss = f.read()
+            self.setStyleSheet(qss)
         self.city_index = None
         self.city_list = city_list
         from PySide6.QtCore import QStringListModel
